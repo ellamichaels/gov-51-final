@@ -1,0 +1,252 @@
+---
+title: "Preliminary Analyses"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(janitor)
+
+# loading census data
+az_census <- read.csv("data/az_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  mutate(state = "AZ")
+            
+ak_census <- read.csv("data/ak_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "AK")
+
+ct_census <- read.csv("data/ct_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "CT")
+
+fl_census <- read.csv("data/fl_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "FL")
+
+mo_census <- read.csv("data/mo_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "MO")
+
+nc_census <- read.csv("data/nc_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "NC")
+
+nd_census <- read.csv("data/nd_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "ND")
+
+ny_census <- read.csv("data/ny_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "NY")
+
+or_census <- read.csv("data/or_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "OR")
+
+pa_census <- read.csv("data/pa_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "PA")
+
+sd_census <- read.csv("data/sd_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "SD")
+
+ut_census <- read.csv("data/ut_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "UT")
+
+wa_census <- read.csv("data/wa_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "WA")
+
+wi_census <- read.csv("data/wi_census.csv") %>%
+  clean_names() %>%
+  filter(year == 6) %>%
+  group_by(ctyname) %>%
+  mutate(tot_pop = sum(tot_pop)) %>%
+  mutate(white = (sum(wa_male) + sum(wa_female))/tot_pop,
+            black = (sum(bac_male) + sum(bac_female))/tot_pop,
+            ia = (sum(iac_male) + sum(iac_female))/tot_pop,
+            asian = (sum(aac_male) + sum(aac_female))/tot_pop,
+            na = (sum(nac_male) + sum(nac_female))/tot_pop,
+            hisp = (sum(h_male) + sum(h_female))/tot_pop,
+         hba = (sum(hbac_male) + sum(hbac_female))/tot_pop) %>%
+  select(stname, ctyname, tot_pop, white, black, ia, asian, na, hisp, hba) %>%
+  unique() %>%
+  ungroup() %>%
+  mutate(state = "WI")
+
+##
+
+```

@@ -1,0 +1,17 @@
+id,type,name
+AZ,state,Arizona
+AZ001,county,Apache
+AZ003,county,Cochise
+AZ005,county,Coconino
+AZ007,county,Gila
+AZ009,county,Graham
+AZ011,county,Greenlee
+AZ012,county,La Paz
+AZ013,county,Maricopa
+AZ015,county,Mohave
+AZ017,county,Navajo
+AZ019,county,Pima
+AZ021,county,Pinal
+AZ023,county,Santa Cruz
+AZ025,county,Yavapai
+AZ027,county,Yuma

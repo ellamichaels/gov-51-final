@@ -1,0 +1,41 @@
+id,type,name
+WA,state,Washington
+WA001,county,Adams
+WA003,county,Asotin
+WA005,county,Benton
+WA007,county,Chelan
+WA009,county,Clallam
+WA011,county,Clark
+WA013,county,Columbia
+WA015,county,Cowlitz
+WA017,county,Douglas
+WA019,county,Ferry
+WA021,county,Franklin
+WA023,county,Garfield
+WA025,county,Grant
+WA027,county,Grays Harbor
+WA029,county,Island
+WA031,county,Jefferson
+WA033,county,King
+WA035,county,Kitsap
+WA037,county,Kittitas
+WA039,county,Klickitat
+WA041,county,Lewis
+WA043,county,Lincoln
+WA045,county,Mason
+WA047,county,Okanogan
+WA049,county,Pacific
+WA051,county,Pend Oreille
+WA053,county,Pierce
+WA055,county,San Juan
+WA057,county,Skagit
+WA059,county,Skamania
+WA061,county,Snohomish
+WA063,county,Spokane
+WA065,county,Stevens
+WA067,county,Thurston
+WA069,county,Wahkiakum
+WA071,county,Walla Walla
+WA073,county,Whatcom
+WA075,county,Whitman
+WA077,county,Yakima

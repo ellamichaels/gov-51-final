@@ -1,0 +1,31 @@
+id,type,name
+UT,state,Utah
+UT001,county,Beaver
+UT003,county,Box Elder
+UT005,county,Cache
+UT007,county,Carbon
+UT009,county,Daggett
+UT011,county,Davis
+UT013,county,Duchesne
+UT015,county,Emery
+UT017,county,Garfield
+UT019,county,Grand
+UT021,county,Iron
+UT023,county,Juab
+UT025,county,Kane
+UT027,county,Millard
+UT029,county,Morgan
+UT031,county,Piute
+UT033,county,Rich
+UT035,county,Salt Lake
+UT037,county,San Juan
+UT039,county,Sanpete
+UT041,county,Sevier
+UT043,county,Summit
+UT045,county,Tooele
+UT047,county,Uintah
+UT049,county,Utah
+UT051,county,Wasatch
+UT053,county,Washington
+UT055,county,Wayne
+UT057,county,Weber
