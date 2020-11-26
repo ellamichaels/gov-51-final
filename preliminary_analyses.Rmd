@@ -3,11 +3,15 @@ title: "Preliminary Analyses"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(janitor)
+```
+
+
+```{r data cleaning}
 
 # loading census data
 az_census <- read.csv("data/az_census.csv") %>%
@@ -246,7 +250,307 @@ wi_census <- read.csv("data/wi_census.csv") %>%
   unique() %>%
   ungroup() %>%
   mutate(state = "WI")
+```
 
-##
+
+```{r Prosecutors}
+
+prosecutors <- readxl::read_xlsx("data/Prosecutor-Elected-Officials-2019.xlsx") %>%
+  clean_names() %>%
+  filter(state %in% c("AZ", "AK", "CT", "FL", "MO", "NY", "NC", "ND", "OR", "PA", "SD", "UT", "WA", "WI")) %>%
+  mutate(ctyname = ifelse(state == "PA", paste(electoral_district, "County"), paste(electoral_district))) %>%
+  select(state, ctyname, office_name, official_name, party_roll_up, white_non_white, race, gender)
 
 ```
+
+
+```{r MFJ Data}
+
+## measures for justice
+az_loc <- read.csv("data/Arizona_State_Data/locations-az.csv")
+ak_loc <- read.csv("data/Arkansas_State_Data/locations-ar.csv")
+ct_loc <- read.csv("data/Connecticut_State_Data/locations-ct.csv")
+fl_loc <- read.csv("data/Florida_State_Data/locations-fl.csv")
+mo_loc <- read.csv("data/Missouri_State_Data/locations-mo.csv")
+ny_loc <- read.csv("data/New_York_State_Data/locations-ny.csv")
+nc_loc <- read.csv("data/North_Carolina_State_Data/locations-nc.csv")
+nd_loc <- read.csv("data/North_Dakota_State_Data/locations-nd.csv")
+or_loc <- read.csv("data/Oregon_State_Data/locations-or.csv")
+pa_loc <- read.csv("data/Pennsylvania_State_Data/locations-pa.csv")
+sd_loc <- read.csv("data/South_Dakota_State_Data/locations-sd.csv")
+ut_loc <- read.csv("data/Utah_State_Data/locations-ut.csv")
+wa_loc <- read.csv("data/Washington_State_Data/locations-wa.csv")
+wi_loc <- read.csv("data/Wisconsin_State_Data/locations-wi.csv")
+
+az_mfj <- read.csv("data/Arizona_State_Data/data-2011-2015-az.csv") %>%
+  rename(id = location_id) %>%
+  left_join(az_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "AZ") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(az_census)
+
+ak_mfj <- read.csv("data/Arkansas_State_Data/data-2011-2015-ar.csv") %>%
+  rename(id = location_id) %>%
+  left_join(ak_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "AK") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(ak_census)
+
+ct_mfj <- read.csv("data/Connecticut_State_Data/data-2011-2015-ct.csv") %>%
+  rename(id = location_id) %>%
+  left_join(ct_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "CT") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(ct_census)
+
+fl_mfj <- read.csv("data/Florida_State_Data/data-2009-2013-fl.csv") %>%
+  rename(id = location_id) %>%
+  left_join(fl_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "FL") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(fl_census)
+
+mo_mfj <- read.csv("data/Missouri_State_Data/data-2011-2015-mo.csv") %>%
+  rename(id = location_id) %>%
+  left_join(mo_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "MO") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(mo_census)
+
+ny_mfj <- read.csv("data/New_York_State_Data/data-2011-2015-ny.csv") %>%
+  rename(id = location_id) %>%
+  left_join(ny_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "NY") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(ny_census)
+
+nc_mfj <- read.csv("data/North_Carolina_State_Data/data-2009-2013-nc.csv") %>%
+  rename(id = location_id) %>%
+  left_join(nc_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "NC") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(nc_census)
+
+nd_mfj <- read.csv("data/North_Dakota_State_Data/data-2011-2015-nd.csv") %>%
+  rename(id = location_id) %>%
+  left_join(nd_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "ND") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(nd_census)
+
+or_mfj <- read.csv("data/Oregon_State_Data/data-2011-2015-or.csv") %>%
+  rename(id = location_id) %>%
+  left_join(or_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "OR") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(or_census)
+
+pa_mfj <- read.csv("data/Pennsylvania_State_Data/data-2009-2013-pa.csv") %>%
+  rename(id = location_id) %>%
+  left_join(pa_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "PA") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(pa_census)
+
+sd_mfj <- read.csv("data/South_Dakota_State_Data/data-2013-2017-sd.csv") %>%
+  rename(id = location_id) %>%
+  left_join(sd_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "SD") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(sd_census)
+
+ut_mfj <- read.csv("data/Utah_State_Data/data-2013-2017-ut.csv") %>%
+  rename(id = location_id) %>%
+  left_join(ut_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "UT") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(ut_census)
+
+wa_mfj <- read.csv("data/Washington_State_Data/data-2009-2013-wa.csv") %>%
+  rename(id = location_id) %>%
+  left_join(wa_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "WA") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(wa_census)
+
+wi_mfj <- read.csv("data/Wisconsin_State_Data/data-2011-2015-wi.csv") %>%
+  rename(id = location_id) %>%
+  left_join(wi_loc) %>%
+  filter(type == "county") %>%
+  mutate(ctyname = paste(name, "County")) %>%
+  mutate(state = "WI") %>%
+  select(state, ctyname, measure_id, filter_id, numerator, denominator, value) %>%
+  left_join(wi_census)
+
+# binding all
+
+full <- rbind(az_mfj, ak_mfj, ct_mfj, fl_mfj, mo_mfj, ny_mfj, nc_mfj, nd_mfj, 
+              or_mfj, pa_mfj, sd_mfj, ut_mfj, wa_mfj, wi_mfj) %>%
+  mutate(value = as.numeric(value)) %>%
+  left_join(prosecutors)
+
+# filtering for measures of all defendants
+
+all_defendants <- full %>%
+  filter(filter_id == 1)
+
+```
+
+
+```{r Measure 27}
+
+# Nonviolent Misdemeanors Sentenced to Jail
+
+measure_27 <- full %>%
+  filter(filter_id == 1 & measure_id == 27) %>%
+  filter(value > 0)
+
+black_27 <- lm(value ~ black, data = measure_27)
+black_wpros_27 <- lm(value ~ black*white_non_white, data = measure_27)
+
+# not significant
+summary(black_27)
+summary(black_wpros_27)
+
+measure_27 %>%
+  ggplot(aes(y = value, x = black)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_classic()
+
+```
+
+
+## Sentencing Length: Notes
+
+The relationship between Black population share and length of imposed prison sentence for nonviolent felonies and misdemeanors is very statistically significant and very large.
+
+```{r}
+
+## Length of Imposed Prison Sentence: Nonviolent Felonies ##
+
+measure_26 <- all_defendants %>%
+  filter(measure_id == 28) %>%
+  filter(value > 0)
+
+black_26 <- lm(value ~ black, data = measure_26)
+
+summary(black_26)
+
+
+measure_26 %>%
+  ggplot(aes(y = value, x = black, color = white_non_white)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_classic()
+
+measure_26 %>%
+  ggplot(aes(y = value, x = log(black), color = white_non_white)) +
+  geom_point() +
+  theme_classic() +
+  geom_smooth(method = "lm")
+
+```
+
+
+
+```{r Measure 28}
+
+## Length of Imposed Jail Sentence: Nonviolent Misdemeanors ##
+
+measure_28 <- all_defendants %>%
+  filter(measure_id == 28) %>%
+  filter(value > 0)
+
+black_28 <- lm(value ~ black, data = measure_28)
+black_wpros_28_log <- lm(value ~ log(black)*white_non_white, data = measure_28) # huge distortions bc basically all white
+black_wpros_28 <- lm(value ~ black*white_non_white, data = measure_28)  # huge distortions bc basically all white
+
+summary(black_28)
+
+measure_28 %>%
+  ggplot(aes(y = value, x = black, color = white_non_white)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_classic()
+
+measure_28 %>%
+  ggplot(aes(y = value, x = log(black), color = white_non_white)) +
+  geom_point() +
+  theme_classic()
+
+```
+
+
+
+```{r Measure 125}
+
+## Pretrial Diversion of Nonviolent Felonies ##
+
+measure_125 <- all_defendants %>%
+  filter(measure_id == 125) %>%
+  filter(value > 0)
+
+black_125 <- lm(value ~ black, data = measure_125)
+
+summary(black_125) # p = 0.069
+
+
+```
+
+
+```{r measure 1}
+
+## Non-Custodial Promise to Appear Instead of Custodial Arrest ##
+
+measure_1 <- all_defendants %>%
+  filter(measure_id == 1) %>%
+  filter(value > 0)
+
+black_1 <- lm(value ~ black, data = measure_1)
+
+summary(black_1) # not significant
+
+```
+
+
+```{r Measure 7}
+
+## Nonviolent Misdemeanor Cases with Nonmonetary Release ##
+
+measure_7 <- all_defendants %>%
+  filter(measure_id == 7) %>%
+  filter(value > 0)
+
+black_7 <- lm(value ~ black, data = measure_7)
+
+summary(black_7) # not statistically significant
+
+```
+
