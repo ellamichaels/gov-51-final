@@ -1,6 +1,6 @@
 ---
 title: "Preliminary Analyses"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include = FALSE}
@@ -422,31 +422,6 @@ all_defendants <- full %>%
 
 ```
 
-
-```{r Measure 27}
-
-# Nonviolent Misdemeanors Sentenced to Jail
-
-measure_27 <- full %>%
-  filter(filter_id == 1 & measure_id == 27) %>%
-  filter(value > 0)
-
-black_27 <- lm(value ~ black, data = measure_27)
-black_wpros_27 <- lm(value ~ black*white_non_white, data = measure_27)
-
-# not significant
-summary(black_27)
-summary(black_wpros_27)
-
-measure_27 %>%
-  ggplot(aes(y = value, x = black)) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  theme_classic()
-
-```
-
-
 ## Sentencing Length: Notes
 
 The relationship between Black population share and length of imposed prison sentence for nonviolent felonies and misdemeanors is very statistically significant and very large.
@@ -503,6 +478,56 @@ measure_28 %>%
 measure_28 %>%
   ggplot(aes(y = value, x = log(black), color = white_non_white)) +
   geom_point() +
+  theme_classic()
+
+```
+
+## Gender
+
+```{r Gender and sentencing length}
+
+gender_26 <- lm(value ~ gender, data = measure_26)
+
+summary(gender_26)
+
+
+measure_26 %>%
+  ggplot(aes(y = value, x = black, color = white_non_white)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_classic()
+
+measure_26 %>%
+  ggplot(aes(y = value, x = log(black), color = white_non_white)) +
+  geom_point() +
+  theme_classic() +
+  geom_smooth(method = "lm")
+
+```
+
+
+## Other
+
+
+```{r Measure 27}
+
+# Nonviolent Misdemeanors Sentenced to Jail
+
+measure_27 <- full %>%
+  filter(filter_id == 1 & measure_id == 27) %>%
+  filter(value > 0)
+
+black_27 <- lm(value ~ black, data = measure_27)
+black_wpros_27 <- lm(value ~ black*white_non_white, data = measure_27)
+
+# not significant
+summary(black_27)
+summary(black_wpros_27)
+
+measure_27 %>%
+  ggplot(aes(y = value, x = black)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
   theme_classic()
 
 ```
